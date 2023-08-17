@@ -22,6 +22,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
+    links:
+      - zookeeper
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -33,6 +35,8 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
     depends_on:
       - kafka
+    links:
+      - kafka
 
   app:
     build:
@@ -41,4 +45,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - kafka-ui
+      - kafka
+    links:
+      - kafka
